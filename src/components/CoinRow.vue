@@ -78,6 +78,7 @@
 
 <template>
   <tr class="coin-row">
+    <router-link :to="{ path: `/coin/${id}` }">Voir les détails</router-link>
     <td class="cell">{{ market_cap_rank }}</td>
     <td class="coinInfos">
       <div class="coinDivImg"><img class="coinImg" v-bind:src="image" /></div>
@@ -92,7 +93,6 @@
     <td class="cell">{{ formattedPrice.formattedMarketCap }}€</td>
 
 
-
   </tr>
 </template>
 
@@ -101,6 +101,7 @@
 export default {
   name: 'CoinRow',
   props: {
+    id: String,
     market_cap_rank: Number,
     image: { type: String, default: "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg" },
     name: { type: String, required: true },
