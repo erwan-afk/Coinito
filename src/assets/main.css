@@ -1,36 +1,47 @@
-@import './base.css';
+/* @import './base.css'; */
+
+/* CSS */
+:root {
+  --main-font: 'Inter', sans-serif;
+  --variable-font: 'InterVariable', sans-serif;
+  --fallback-font: 'GTWalsheimPro', sans-serif;
+  font-family: var(--main-font);
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: var(--variable-font);
+  }
+}
+
+@font-face {
+  font-family: 'GTWalsheimPro';
+  src: url('/src/fonts/GTWalsheimPro-Medium.ttf') format('truetype'),
+       url('/src/fonts/GTWalsheimPro-Bold.ttf') format('truetype');
+}
+
+html {
+  --scroll-behavior: smooth;
+  scroll-behavior: smooth;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: black;
+  
+}
+
+* {
+  font-family: Inter, sans-serif;
+}
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
   font-family: Inter, sans-serif;
   
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-
-  }
-
-  #app {
-    display: flex;
-    width: 100%;
-    flex-direction: column
-  }
-}

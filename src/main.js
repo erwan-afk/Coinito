@@ -10,9 +10,13 @@ const routes = [
     { path: '/coin/:id', component: CoinPage, name: 'CoinDetail', }
 ];
 
+
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
+    scrollBehavior() {
+        return { top: 0, left: 0 }
+    }
 });
 
 const app = createApp(App);

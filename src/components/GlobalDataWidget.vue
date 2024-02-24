@@ -3,11 +3,58 @@
   display: flex;
   justify-content: space-between;
   padding: 20px 0px;
+  color: white;
+  flex-direction: column;
+  margin-top: 80px;
+  margin-bottom: 100px;
+  z-index: 1;
 }
 
-.th_table {
-  font-size: 15px;
+.case {
+  display: flex;
+  background-color: rgba(255, 255, 255, .1);
+  padding: 30px;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid white;
+  border-radius: 20px;
+  margin: 15px;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.large {
+  flex-grow: 1;
+}
+
+.large div {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.line {
+  background-color: white;
+  width: 100px;
+  height: .5px;
+  margin: 0px 30px;
+}
+
+.info {
+  font-size: 24px;
+  padding-bottom: 10px;
+}
+
+.data {
+  font-size: 36px;
+  font-weight: 700;
+}
+
 
 .th_table span {
   font-weight: 700;
@@ -16,20 +63,39 @@
 
 <template>
   <div class="global_stats">
-    <p class="th_table"> Coins : <span>{{ GlobalData.active_cryptocurrencies }}</span></p>
+    <div class="row">
+      <div class="case">
+        <span class="info"> Nombre de coins : </span>
+        <span class="data">{{ GlobalData.active_cryptocurrencies }}</span>
+      </div>
 
-    <p class="th_table" v-if="GlobalData.total_market_cap">
-      Market : <span>{{ (GlobalData.total_market_cap.eur / 1e9).toFixed(2) }}B €</span>
-    </p>
+      <div class="case" v-if="GlobalData.total_market_cap">
+        <span class="info">Marché total :</span>
+        <span class="data">{{ (GlobalData.total_market_cap.eur / 1e9).toFixed(2) }}B €</span>
+      </div>
 
-    <p class="th_table" v-if="GlobalData.total_volume">
-      24h Vol : <span>{{ (GlobalData.total_volume.eur / 1e9).toFixed(2) }}B €</span>
-    </p>
+      <div class="case" v-if="GlobalData.total_volume">
+        <span class="info">Volume du marché sur 24h :</span>
+        <span class="data">{{ (GlobalData.total_volume.eur / 1e9).toFixed(2) }}B €</span>
+      </div>
 
-    <p class="th_table" v-if="resultDominance.largest1 && resultDominance.largest2">
-      Dominance : <span>{{ resultDominance.largest1.key }} {{ resultDominance.largest1.value.toFixed(1) }}%
-        {{ resultDominance.largest2.key }} {{ resultDominance.largest2.value.toFixed(1) }}%</span>
-    </p>
+    </div>
+    <div class="row">
+      <div class="case large" v-if="resultDominance.largest1 && resultDominance.largest2">
+        <span class="info">Domination du marché :</span>
+        <div>
+          <span class="data">{{ resultDominance.largest1.key.toUpperCase() }} {{ resultDominance.largest1.value.toFixed(1)
+          }}%</span>
+          <div class="line"></div>
+          <span class="data"> {{ resultDominance.largest2.key.toUpperCase() }} {{
+            resultDominance.largest2.value.toFixed(1) }}%</span>
+        </div>
+      </div>
+
+    </div>
+
+
+
   </div>
 </template>
 

@@ -6,29 +6,60 @@
 .coinDivImg {
   display: flex;
   align-items: center;
-  padding-right: 20px;
+  padding-right: 30px;
 }
 
 .coin-row {
-  display: table-row;
-  border-top: 1px #eff2f5 solid;
+  display: flex;
+  border-top: .5px rgba(255, 255, 255, .4) solid;
+  align-items: center;
+  padding: 0px 50px;
+  justify-content: space-between;
+  text-decoration: none;
+  color: white;
+}
+
+.coin-row:hover {
+  background-color: rgba(255, 255, 255, .1);
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  cursor: pointer;
 }
 
 .coinInfos {
   display: flex;
   flex-direction: row;
-  padding: 10px 0px;
+  padding: 12px 0px;
+  flex: 1;
+  align-self: stretch;
+  align-items: center;
 
 }
 
 .cell {
-  display: table-cell;
+  display: flex;
   text-align: right;
+  align-self: stretch;
+  align-items: center;
+  flex: 1;
+  font-weight: 400;
+  font-size: 16px;
 }
+
+.cell:first-child {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+
+.cell:not(:first-child):not(:nth-child(2)) {
+  justify-content: flex-end;
+}
+
 
 .cell:first-child,
 .cell:nth-child(2) {
-  display: table-cell;
+  display: flex;
   text-align: left;
 }
 
@@ -41,27 +72,55 @@
 .coinTitle {
   display: flex;
   flex-direction: column;
-
   align-items: flex-start;
 }
 
 .coinSymbol {
-  font-size: 12px;
+  font-size: 16px;
   text-transform: uppercase;
   font-weight: 600;
-  color: #64748B;
+  color: rgba(255, 255, 255, .7);
 
 }
 
 
 .coinName {
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
-  color: #334155;
+  color: white;
 
 }
 
+.neg {
+  color: #ff0000;
+  filter: drop-shadow(0px 0px 2px #ff0000);
 
+}
+
+.neg:before {
+  width: 25px;
+  padding-top: 3px;
+  padding-right: 3px;
+  content: url('../images/fleche_haut.svg');
+  color: inherit !important;
+}
+
+.pos {
+  color: #00FF1A;
+  filter: drop-shadow(0px 0px 2px #00FF1A);
+}
+
+.pos:before {
+
+  width: 25px;
+  padding-top: 3px;
+  content: url('../images/fleche_bas.svg');
+  border-radius: 10px;
+  color: inherit !important;
+}
+
+
+.percent {}
 
 @media (min-width: 1024px) {
   .coinTitle {
@@ -77,8 +136,8 @@
 </style>
 
 <template>
-  <tr class="coin-row">
-    <router-link :to="{ path: `/coin/${id}` }">Voir les détails</router-link>
+  <router-link :to="'coin/' + id" class="coin-row">
+    <!-- <router-link :to="{ path: `/coin/${id}` }">Voir les détails</router-link>-->
     <td class="cell">{{ market_cap_rank }}</td>
     <td class="coinInfos">
       <div class="coinDivImg"><img class="coinImg" v-bind:src="image" /></div>
@@ -88,12 +147,12 @@
       </div>
     </td>
     <td class="cell">{{ formattedPrice.formattedCurrentPrice }}€</td>
-    <td class="cell">{{ formattedPrice.formattedPriceChangePercentage24h }}%</td>
+    <td class="cell percent" :class="{ 'pos': price_change_percentage_24h >= 0, 'neg': price_change_percentage_24h < 0 }">
+      {{ formattedPrice.formattedPriceChangePercentage24h }}%</td>
     <td class="cell">{{ formattedPrice.formattedTotalVolume }}€</td>
     <td class="cell">{{ formattedPrice.formattedMarketCap }}€</td>
 
-
-  </tr>
+  </router-link>
 </template>
 
 <script>
@@ -116,7 +175,7 @@ export default {
       const internationalNumberFormat = new Intl.NumberFormat('fr-FR')
       return {
         formattedCurrentPrice: internationalNumberFormat.format(this.current_price),
-        formattedPriceChangePercentage24h: internationalNumberFormat.format(this.price_change_percentage_24h.toFixed(1)),
+        formattedPriceChangePercentage24h: internationalNumberFormat.format(Math.abs(this.price_change_percentage_24h.toFixed(1))),
         formattedMarketCap: internationalNumberFormat.format(this.market_cap),
         formattedTotalVolume: internationalNumberFormat.format(this.total_volume),
 
