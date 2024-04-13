@@ -1,3 +1,6 @@
+![alt text](https://github.com/erwan-afk/Coinito/blob/main/src/images/Coinito_banner.png?raw=true)
+
+
 # vue-project
 
 This template should help get you started developing with Vue 3 in Vite.
