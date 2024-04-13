@@ -63,6 +63,22 @@
     font-weight: 800;
     font-size: 20px;
 }
+
+@media (max-width: 500px) {
+    .tablefollowcase {
+        font-weight: 800;
+        font-size: 16px;
+    }
+
+    .percent {
+        font-size: 12px;
+    }
+
+    .tablefollowrow div {
+        padding: 20px 0px;
+    }
+
+}
 </style>
 
 <template>
@@ -82,23 +98,23 @@
                 {{ formattedPrice.formattedPriceChangePercentage1h }}%
             </div>
             <div class="percent"
-                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_24h_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_1h_in_currency.eur < 0 }">
+                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_24h_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_24h_in_currency.eur < 0 }">
                 {{ formattedPrice.formattedPriceChangePercentage24h }}%
             </div>
             <div class="percent"
-                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_7d_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_1h_in_currency.eur < 0 }">
+                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_7d_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_7d_in_currency.eur < 0 }">
                 {{ formattedPrice.formattedPriceChangePercentage7d }}%
             </div>
             <div class="percent"
-                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_14d_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_1h_in_currency.eur < 0 }">
+                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_14d_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_14d_in_currency.eur < 0 }">
                 {{ formattedPrice.formattedPriceChangePercentage14d }}%
             </div>
             <div class="percent"
-                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_30d_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_1h_in_currency.eur < 0 }">
+                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_30d_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_30d_in_currency.eur < 0 }">
                 {{ formattedPrice.formattedPriceChangePercentage30d }}%
             </div>
             <div class="percent"
-                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_1y_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_1h_in_currency.eur < 0 }">
+                :class="{ 'pos': CoinTimeTableFollow.market_data.price_change_percentage_1y_in_currency.eur >= 0, 'neg': CoinTimeTableFollow.market_data.price_change_percentage_1y_in_currency.eur < 0 }">
                 {{ formattedPrice.formattedPriceChangePercentage1y }}%
             </div>
 
@@ -127,7 +143,7 @@ export default {
                 const data = await getSpecificCoinData(this.id);
                 this.CoinTimeTableFollow = data;
 
-                console.log(this.CoinTimeTableFollow);
+                //console.log(this.CoinTimeTableFollow);
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -148,7 +164,12 @@ export default {
                 formattedPriceChangePercentage1y: internationalNumberFormat.format(Math.abs(this.CoinTimeTableFollow.market_data.price_change_percentage_1y_in_currency.eur.toFixed(2))),
             };
         },
-    }
+    },
+    watch: {
+        id() {
+            this.retrieveSpecificCoinData(); // Mettre à jour les données lorsque l'ID change
+        },
+    },
+
 };
 </script>
-

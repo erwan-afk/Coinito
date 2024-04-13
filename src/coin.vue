@@ -71,9 +71,7 @@
     margin-top: 10vh !important;
 }
 
-.icon {
-    margin-top: 5vh;
-}
+
 
 @media (min-width: 1055px) {
 
@@ -126,6 +124,7 @@
                     <CoinChart :id="coinId"></CoinChart>
                     <CoinTimeTableFollow :id="coinId"></CoinTimeTableFollow>
 
+
                 </div>
 
                 <div style=" height: 100%;" :class="{ 'gradient2': isPositiveChange, 'gradient3': !isPositiveChange }"
@@ -152,71 +151,22 @@
 
         </div>
 
+        <Footer />
 
 
-
-
-
-        <div class="third_section" id="third_section">
-            <div class="title">Internet,<br>
-                notre terrain de jeu.
-            </div>
-
-            <div class="icon">
-                <img src="./images/logo_imac.png" alt="">
-            </div>
-
-            <div class="description">Dans une logique de professionnalisation, les étudiants <br>d’ <b>IMAC</b> mettent en
-                application
-                leurs connaissances en réalisant<br> de multiples projets. Aujourd’hui le sujet est le developpement<br>
-                d’une
-                web
-                app
-                dynamique avec un framework.
-            </div>
-
-
-            <div class="title collab">Une collaboration future ?
-            </div>
-
-            <div class="share">
-                <div class="icon">
-                    <img src="./images/logo_instagram.png" alt="">
-                </div>
-                <div class="icon">
-                    <img src="./images/logo_github.png" alt="">
-                </div>
-                <div class="icon">
-                    <img src="./images/logo_erwan.png" alt="">
-                </div>
-                <div class="icon">
-                    <img src="./images/logo_gmail.png" alt="">
-                </div>
-                <div class="icon">
-                    <img src="./images/logo_linkedin.png" alt="">
-                </div>
-            </div>
-
-
-            <div class="icon thanks">Merci !</div>
-
-            <div class="copyright">Copyright © 2024 Erwan THIBAUD. <br>
-                All rights reserved.</div>
-
-        </div>
 
 
     </div>
 </template>
-  
+
 <script>
-
-import CoinDetails from './components/CoinDetails.vue'
-import CoinChart from './components/CoinChart.vue'
-import CoinTimeTableFollow from './components/CoinTimeTableFollow.vue'
-import CoinDesc from './components/CoinDesc.vue'
-import Menu from './components/Menu.vue'
-
+import { useRoute } from 'vue-router';
+import CoinDetails from './components/CoinDetails.vue';
+import CoinChart from './components/CoinChart.vue';
+import CoinTimeTableFollow from './components/CoinTimeTableFollow.vue';
+import CoinDesc from './components/CoinDesc.vue';
+import Menu from './components/Menu.vue';
+import Footer from './components/Footer.vue';
 
 export default {
     name: 'Coin',
@@ -226,26 +176,28 @@ export default {
         CoinTimeTableFollow,
         CoinDesc,
         Menu,
+        Footer,
     },
     data() {
         return {
-            coinId: null,
+            coinId: '',
             isPositiveChange: true,
         };
     },
-    created() {
-        this.coinId = this.$route.params.id;
-    },
     methods: {
+        updateCoinId() {
+            const route = useRoute();
+            this.coinId = route.params.id;
+        },
         handlePriceChange(isPositiveChange) {
-            // Mettre à jour la propriété en fonction de la tendance de la variation de prix
             this.isPositiveChange = isPositiveChange;
-        }
-    }
-
-
-
-
+        },
+    },
+    created() {
+        this.updateCoinId(); // Appel initial pour mettre à jour l'ID de la pièce
+    },
+    updated() {
+        this.updateCoinId(); // Mise à jour de l'ID de la pièce lorsque le composant est mis à jour
+    },
 };
 </script>
-  

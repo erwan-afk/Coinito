@@ -1,17 +1,19 @@
 export async function getCoinChartData(id) {
-    return fetch('https://api.coingecko.com/api/v3/coins/' + id + '/market_chart?vs_currency=eur&days=7')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data;
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            // Si vous souhaitez relancer l'erreur, vous pouvez le faire ici
-            throw error;
-        });
+    const apiKey = 'CG-GnjZx3gVbsjrJgesfyEWkvr1'; // Replace with your actual API key
+    const url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=eur&days=7&x_cg_demo_api_key=${apiKey}`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error:", error);
+        // If you want to rethrow the error, you can do it here
+        throw error;
+    }
 }

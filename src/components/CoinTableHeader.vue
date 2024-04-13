@@ -12,12 +12,14 @@
     content: ' \25BC' !important;
     color: inherit;
     padding-right: 5px;
+    transition: all 0.3s ease;
 }
 
 #tableHeader th:before {
     content: ' \25B2';
     padding-right: 5px;
     color: inherit;
+    transition: all 0.3s ease;
 }
 
 #tableHeader th {
@@ -43,6 +45,7 @@
 #tableHeader th:hover:before {
     content: ' \25B2';
     color: inherit !important;
+
 }
 
 th.cell {
@@ -63,7 +66,7 @@ th.cell {
     </tr>
 </template>
 
-  
+
 <script>
 export default {
     data() {
@@ -94,4 +97,3 @@ export default {
     },
 };
 </script>
-  

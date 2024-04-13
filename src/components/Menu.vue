@@ -61,7 +61,14 @@
     font-weight: 500;
     font-size: 16px;
     padding-left: 12px;
+    transition: all 0.3s;
 }
+
+.links div:hover {
+    color: #ffffff;
+    transition: all 0.3s;
+}
+
 
 
 .links img {
@@ -78,6 +85,12 @@
     padding: 0px;
 }
 
+.btn:hover {
+    border: 2px solid rgba(255, 255, 255, .4);
+
+    transition: all 0.3s;
+}
+
 .btn div {
     padding: 8px 24px;
     margin: 1px;
@@ -88,15 +101,15 @@
     border-radius: 10px;
 }
 
-/* Media query pour rendre le menu flexible en fonction de la largeur de l'écran */
+
+
 @media (max-width: 768px) {
-    .menu {
-        flex-direction: column;
-        /* Changez la direction en colonne pour les écrans plus petits */
-        align-items: flex-start;
-        /* Alignez les éléments à gauche */
+    .links {
+        display: none;
     }
 }
+
+@media (min-width: 1024px) {}
 </style>
 
 <template>
@@ -106,7 +119,7 @@
                 <img class="logo_img" src="../images/logo.png" alt="">
                 <div class="logo_title">Coinito</div>
             </router-link>
-            <div class="container_link">
+            <div class="container_link links">
                 <router-link to='/coin/bitcoin' class="links">
                     <img src="../images/bitcoin-logo.png" alt="">
                     <div>Bitcoin</div>
@@ -124,16 +137,18 @@
             <a href="#second_section" class="btn">
                 <div>Découvrir</div>
             </a>
+
+
         </div>
     </div>
 </template>
 
 <script>
+
+
+
 export default {
-    name: 'Menu'
+    name: 'Menu',
+
 };
 </script>
-
-
-
-  

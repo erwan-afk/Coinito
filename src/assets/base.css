@@ -32,6 +32,14 @@
 
 :root {
   --font-family-GT: 'GTWalsheimPro', sans-serif;
+  --rotate-x:0deg;
+  --rotate-y:0deg;
+  --translate-x:0px;
+  --translate-y:0px;
+  --base-transform-left:translate(-105%, -60%);
+  --base-transform-right:translate(95%, 20%);
+
+
 }
 
 /* semantic color variables for this project */

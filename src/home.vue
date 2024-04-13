@@ -9,6 +9,7 @@
     flex-direction: column;
     align-items: center;
     background-position: 0% 10%;
+    overflow: hidden;
 
 }
 
@@ -48,15 +49,11 @@
 }
 
 .main_title {
-    margin-top: 3vh;
-    font-family: var(--fallback-font);
-    color: white;
-    font-size: 106px;
-    text-align: center;
-    letter-spacing: -3px;
-    line-height: 100px;
-    z-index: 1;
+    margin-top: 10vh;
+
 }
+
+
 
 .title {
     margin-top: 3vh;
@@ -69,15 +66,7 @@
     z-index: 1;
 }
 
-.description {
-    color: rgba(255, 255, 255, .7);
-    text-align: center;
-    font-size: 20px;
-    font-weight: 400;
-    margin-top: 5vh;
-    z-index: 1;
-    line-height: 35px;
-}
+
 
 .gradient {
     background: radial-gradient(211.50000000000003% 113.1% at -66.4% 35.9%, var(--token-958e2cd1-b113-4aa3-9235-7a2b959c8feb, #000000)
@@ -98,7 +87,7 @@
     width: 100%;
     height: 105vh;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 0px 0px 20px 20px;
 }
 
 .ombre {
@@ -175,6 +164,10 @@
 .framework img {
     position: absolute;
     transform: translate(264px, 30px);
+    transform: translate(calc(264px + var(--translate-x)), calc(30px + var(--translate-y)));
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.05, 0.5, 0, 1);
+    will-change: transform;
 }
 
 .third_section svg {
@@ -197,6 +190,112 @@
     font-size: 20px;
     line-height: 35px;
 }
+
+.internet {
+
+    margin-top: 5vh;
+
+}
+
+.img_coin_left {
+    position: absolute;
+    width: 400px;
+    transform: translate(calc(-150% + var(--translate-x)), calc(-60% + var(--translate-y)));
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.05, 0.5, 0, 1);
+    will-change: transform;
+}
+
+.img_coin_right {
+    position: absolute;
+    width: 450px;
+    transform: translate(calc(140% + var(--translate-x)), calc(20% + var(--translate-y)));
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.05, 0.5, 0, 1);
+    will-change: transform;
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+
+    .framework img {
+        width: 180px;
+        transform: translate(120px, 30px);
+
+    }
+
+    .framework .title {
+        font-size: 32px;
+        width: 180px;
+        line-height: 38px;
+    }
+
+    .framework {
+        padding: 30px;
+        width: 200px;
+        backdrop-filter: blur(50px);
+        gap: 20px;
+    }
+
+    .description_framework {
+        font-size: 11px;
+        line-height: 20px;
+    }
+
+    .third_section svg {
+        transform: translate(30px, -150px);
+        width: 200px;
+        height: 250px;
+    }
+
+    .framework img {
+        width: 150px;
+    }
+
+
+
+}
+
+@media (max-width: 500px) {
+
+    .title {
+        font-size: 40px;
+        line-height: 55px;
+    }
+
+
+
+    .share {
+        width: 200px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 20px 20px;
+    }
+
+    .share .icon img {
+        width: 60px;
+    }
+
+    .share div:not(:last-child) {
+        margin: 0px;
+    }
+
+    .footer-title {
+        width: 80vw;
+    }
+
+    .thanks {
+        font-size: 32px;
+        padding: 20px 40px;
+    }
+
+}
 </style>
 
 <template>
@@ -207,16 +306,9 @@
         <div class="description">Coinito vous permet de trier, filtrer et rechercher <br>
             des informations sur les coins les plus connus du marché mondial. </div>
         <GlobalDataWidget />
-    </div>
 
-    <div class="second_section" id="second_section">
-        <div class="title">Partez à la découverte <br>
-            de ces richesses.
-        </div>
-        <div class="description">Elle représentent une révolution financière en utilisant la blockchain pour <br>assurer la
-            sécurité et la transparence des transactions, tout en défiant les <br>modèles traditionnels de monnaie émise par
-            les gouvernements.
-        </div>
+        <img id="coinleft" class="img_coin_left" src="./images/coin_left.png" alt="">
+        <img id="coinright" class="img_coin_right" src="./images/coin_right.png" alt="">
 
         <div class="gradient" ref="gradient"></div>
 
@@ -225,104 +317,80 @@
                 style="width: 100vw; height: 100vh; border-radius: 0px; background-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.03) 11.872%, rgba(0, 0, 0, 0.1) 22.496%, rgba(0, 0, 0, 0.22) 32.184%, rgba(0, 0, 0, 0.35) 41.248%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.65) 58.752%, rgba(0, 0, 0, 0.78) 67.816%, rgba(0, 0, 0, 0.9) 77.504%, rgba(0, 0, 0, 0.97) 88.128%, rgb(0, 0, 0) 100%);">
             </div>
         </div>
+    </div>
+
+    <div class="second_section" id="second_section">
+        <div class="title">Partez à la découverte <br>
+            de ces richesses.
+        </div>
+        <div class="description">Elle représentent une révolution financière en utilisant la blockchain pour <br>assurer
+            la
+            sécurité et la transparence des transactions, tout en défiant les <br>modèles traditionnels de monnaie émise
+            par
+            les gouvernements.
+        </div>
 
         <CoinTable />
 
     </div>
 
-    <div class="third_section" id="third_section">
-        <div class="title">Internet,<br>
-            notre terrain de jeu.
-        </div>
+    <Footer />
 
-        <div class="icon">
-            <img src="./images/logo_imac.png" alt="">
-        </div>
-
-        <div class="description">Dans une logique de professionnalisation, les étudiants <br>d’ <b>IMAC</b> mettent en
-            application
-            leurs connaissances en réalisant<br> de multiples projets. Aujourd’hui le sujet est le developpement<br> d’une
-            web
-            app
-            dynamique avec un framework.
-        </div>
-
-        <div class="icon framework">
-            <div class="title">Le Framework <br>JavaScript <br>
-                Évolutif
-            </div>
-            <div class="description_framework">Un framework accessible,<br>
-                performant et polyvalent pour <br>construire des interfaces utilisateur.
-            </div>
-            <img src="./images/vue_logo.png" alt="">
-
-
-        </div>
-        <svg width="303" height="278" viewBox="0 0 303 278" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="151.5" cy="139" rx="151.5" ry="139" fill="#00BB7D" />
-        </svg>
-
-        <div class="title">Une collaboration future ?
-        </div>
-
-        <div class="share">
-            <div class="icon">
-                <img src="./images/logo_instagram.png" alt="">
-            </div>
-            <div class="icon">
-                <img src="./images/logo_github.png" alt="">
-            </div>
-            <div class="icon">
-                <img src="./images/logo_erwan.png" alt="">
-            </div>
-            <div class="icon">
-                <img src="./images/logo_gmail.png" alt="">
-            </div>
-            <div class="icon">
-                <img src="./images/logo_linkedin.png" alt="">
-            </div>
-        </div>
-
-
-        <div class="icon thanks">Merci !</div>
-
-        <div class="copyright">Copyright © 2024 Erwan THIBAUD. <br>
-            All rights reserved.</div>
-
-
-
-    </div>
-
-
-
-
-    <!--
-     -->
 </template>
-  
+
 <script>
 import GlobalDataWidget from './components/GlobalDataWidget.vue'
 import CoinTable from './components/CoinTable.vue'
 import Menu from './components/Menu.vue'
+import Footer from './components/Footer.vue'
 
 export default {
     name: 'App',
     components: {
         GlobalDataWidget,
         CoinTable,
-        Menu
+        Menu,
+        Footer
     },
     mounted() {
-        this.matchHeight()
+        this.handleResize(); // Appeler handleResize() lorsque le composant est monté
+        window.addEventListener('resize', this.handleResize);
+
+        const imgCoinLeft = document.querySelector('.img_coin_left');
+        const imgCoinRight = document.querySelector('.img_coin_right');
+
+        const smooth = 0.03;
+        const initialTranslateX = (window.innerWidth / 2) * smooth;
+        const initialTranslateY = (window.innerHeight / 2) * smooth;
+
+        // Appliquer les transformations initiales
+        imgCoinLeft.style.setProperty('--translate-x', `${initialTranslateX}px`);
+        imgCoinLeft.style.setProperty('--translate-y', `${initialTranslateY}px`);
+
+        imgCoinRight.style.setProperty('--translate-x', `${-initialTranslateX}px`);
+        imgCoinRight.style.setProperty('--translate-y', `${-initialTranslateY}px`);
+
+        document.addEventListener('mousemove', (event) => {
+            const translateX = (event.clientX - window.innerWidth / 2) * smooth;
+            const translateY = (event.clientY - window.innerHeight / 2) * smooth;
+
+            // Appliquer les transformations basées sur la souris en utilisant des variables CSS
+            imgCoinLeft.style.setProperty('--translate-x', `${translateX}px`);
+            imgCoinLeft.style.setProperty('--translate-y', `${translateY}px`);
+
+            imgCoinRight.style.setProperty('--translate-x', `${translateX}px`);
+            imgCoinRight.style.setProperty('--translate-y', `${translateY}px`);
+        });
+    },
+
+    destroyed() {
+        window.removeEventListener('resize', this.handleResize);
     },
     methods: {
-        matchHeight() {
+        handleResize() {
             let height = this.$refs.first_section.clientHeight;
             this.$refs.gradient.style.height = (height + 50) + 'px';
-
-        }
+        },
     }
-
 }
 </script>
-  

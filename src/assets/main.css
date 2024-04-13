@@ -5,6 +5,10 @@
   --main-font: 'Inter', sans-serif;
   --variable-font: 'InterVariable', sans-serif;
   --fallback-font: 'GTWalsheimPro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: never;
+
   font-family: var(--main-font);
   font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
 }
@@ -41,6 +45,50 @@ body {
   width: 100%;
   font-family: Inter, sans-serif;
   
+}
+
+.main_title {
+  margin-top: 3vh;
+  font-family: var(--fallback-font);
+  color: white;
+  font-size: 106px;
+  text-align: center;
+  letter-spacing: -3px;
+  line-height: 100px;
+  z-index: 1;
+}
+
+.description {
+  color: rgba(255, 255, 255, .7);
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 5vh;
+  z-index: 1;
+  line-height: 35px;
+}
+
+@media (max-width: 768px) {
+  
+
+}
+
+@media (max-width: 1000px) {
+  .main_title {
+    font-size: 70px;
+    line-height: 70px;
+  }
+
+  .description {
+    font-size: 15px;
+    line-height: 20px;
+    padding: 0px 50px;
+  }
+}
+
+@media (min-width: 768px) {
+  
+   
 }
 
 

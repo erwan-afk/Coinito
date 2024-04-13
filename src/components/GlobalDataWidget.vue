@@ -19,6 +19,7 @@
   border: 1px solid white;
   border-radius: 20px;
   margin: 15px;
+  backdrop-filter: blur(8px);
 }
 
 .row {
@@ -59,6 +60,38 @@
 .th_table span {
   font-weight: 700;
 }
+
+@media (max-width: 1000px) {
+
+  .row {
+    flex-direction: column;
+  }
+
+
+}
+
+@media (max-width: 500px) {
+
+  .global_stats {
+    width: 100%;
+  }
+
+  .info {
+    font-size: 16px;
+  }
+
+  .data {
+    font-size: 24px;
+  }
+
+  .large div {
+    flex-direction: column;
+  }
+
+  .large .line {
+    margin: 10px;
+  }
+}
 </style>
 
 <template>
@@ -84,11 +117,12 @@
       <div class="case large" v-if="resultDominance.largest1 && resultDominance.largest2">
         <span class="info">Domination du marché :</span>
         <div>
-          <span class="data">{{ resultDominance.largest1.key.toUpperCase() }} {{ resultDominance.largest1.value.toFixed(1)
-          }}%</span>
+          <span class="data">{{ resultDominance.largest1.key.toUpperCase() }} {{
+          resultDominance.largest1.value.toFixed(1)
+        }}%</span>
           <div class="line"></div>
           <span class="data"> {{ resultDominance.largest2.key.toUpperCase() }} {{
-            resultDominance.largest2.value.toFixed(1) }}%</span>
+          resultDominance.largest2.value.toFixed(1) }}%</span>
         </div>
       </div>
 
@@ -161,4 +195,3 @@ export default {
   },
 };
 </script>
-

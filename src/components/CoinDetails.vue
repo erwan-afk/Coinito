@@ -156,6 +156,50 @@
     }
 
 }
+
+@media (max-width: 500px) {
+
+    .price_coin {
+        font-size: 32px;
+    }
+
+    .daily_raise svg {
+        display: none;
+    }
+
+    .daily_raise div {
+        padding-right: 0px;
+    }
+
+    .title_coin div:nth-child(3) {
+
+        font-size: 12px;
+    }
+
+    .title_coin div:nth-child(3) {
+
+        display: none;
+    }
+
+    .infobar div:nth-child(2) {
+        font-size: 12px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+    }
+
+    .rowdetail {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .detailtab {
+        font-size: 12px;
+    }
+
+
+
+}
 </style>
 
 <template>
@@ -193,7 +237,7 @@
 
         <div class="rowdetail">
             <div class="bar">
-                <div class="bar-gradient"></div>
+                <div class="bar-gradient" :style="{ width: currentPriceWidth }"></div>
             </div>
         </div>
 
@@ -247,9 +291,15 @@ export default {
     data() {
         return {
             CoinDetails: [],
+            currentPriceWidth: '0%',
         };
     },
+    emits: ['price-change'],
     watch: {
+        id() {
+            this.retrieveSpecificCoinData(); // Mettre à jour les données lorsque l'ID change
+            this.updateCurrentPriceWidth();
+        },
         'CoinDetails.market_data.price_change_percentage_1h_in_currency.eur': function (newValue) {
             // Émettre un événement avec la tendance de la variation de prix dès que la valeur est mise à jour
             const isPositiveChange = newValue >= 0;
@@ -261,7 +311,7 @@ export default {
             try {
                 const data = await getSpecificCoinData(this.id);
                 this.CoinDetails = data;
-
+                this.updateCurrentPriceWidth();
                 // Stocker les données spécifiques de la pièce dans le local storage
                 //localStorage.setItem('SpecificCoinData' + this.id, JSON.stringify(data));
 
@@ -270,10 +320,28 @@ export default {
                 console.error("Error:", error);
             }
         },
+        updateCurrentPriceWidth() {
+            const currentPrice = this.CoinDetails.market_data.current_price.eur;
+            const lowPrice = this.CoinDetails.market_data.low_24h.eur;
+            const highPrice = this.CoinDetails.market_data.high_24h.eur;
+
+            // Calcul de la différence entre le prix actuel et le prix le plus bas
+            const diffFromLow = currentPrice - lowPrice;
+            // Calcul de la différence entre le prix le plus élevé et le prix le plus bas
+            const diffBetweenHighAndLow = highPrice - lowPrice;
+
+            // Calcul de la largeur de la barre en pourcentage
+            const currentPriceWidthPercentage = (diffFromLow / diffBetweenHighAndLow) * 100;
+
+            // Mise à jour de la largeur de la barre
+            this.currentPriceWidth = currentPriceWidthPercentage + '%';
+            //console.log(this.currentPriceWidth);
+        }
 
     },
     created() {
         this.retrieveSpecificCoinData();
+
         // Vérifier si les données spécifiques de la pièce existent dans le local storage
         /*
         const storedSpecificCoinData = localStorage.getItem('SpecificCoinData' + this.id);
@@ -306,8 +374,8 @@ export default {
             };
         },
 
-    }
+    },
+
 
 };
 </script>
-

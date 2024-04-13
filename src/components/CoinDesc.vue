@@ -28,6 +28,12 @@
     text-align: justify;
     text-align-last: center;
 }
+
+@media (max-width: 500px) {
+    .text {
+        width: 80%;
+    }
+}
 </style>
 
 <template>
@@ -57,7 +63,7 @@ export default {
                 const data = await getSpecificCoinData(this.id);
                 this.CoinDesc = data;
 
-                console.log(this.CoinDesc);
+                //console.log(this.CoinDesc);
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -66,7 +72,11 @@ export default {
     created() {
         this.retrieveSpecificCoinData();
     },
-
+    watch: {
+        id() {
+            this.retrieveSpecificCoinData(); // Mettre à jour les données lorsque l'ID change
+        },
+    },
     computed: {
         text() {
             // Vérifier si CoinDetails.description.en existe pour éviter les erreurs
@@ -89,4 +99,3 @@ export default {
     },
 };
 </script>
-

@@ -8,14 +8,14 @@
 
 .container_table {
     margin-top: 15vh;
-    width: 80%;
+    width: 90%;
     border: 1px solid white;
     border-radius: 20px;
     background-color: rgba(255, 255, 255, .1);
     backdrop-filter: blur(150px);
     z-index: 1;
-
 }
+
 
 .filter {
     padding: 50px;
@@ -29,9 +29,6 @@
     height: 80%;
     z-index: 0;
     position: absolute;
-
-
-
 }
 
 .orange {
@@ -44,15 +41,65 @@
     margin-right: -40%;
 
 }
-</style>
-<template>
-    <div class="rectange orange"></div>
-    <div class="rectange blanc"></div>
 
-    <div class="container_table">
+@media (max-width: 500px) {
+
+    .coins-table tr th:nth-last-child(-n+3),
+    .coins-table tr th:nth-child(3),
+    .coins-table a td:nth-last-child(-n+3),
+    .coinSymbol,
+    .coins-table a td:nth-child(3) {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .coins-table tr th:nth-last-child(-n+2),
+    .coins-table tr th:nth-child(3),
+    .coins-table a td:nth-last-child(-n+2),
+    .coinSymbol,
+    .coins-table a td:nth-child(3) {
+        display: none;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .rectange {
+        width: 50vw;
+    }
+}
+
+@media (max-width: 1000px) {
+    .container_table {
+        margin-top: 10vh;
+        margin-left: 15px;
+        margin-right: 15px;
+
+    }
+
+}
+
+@media (max-width: 1200px) {
+
+    .coins-table tr th:nth-last-child(-n+2),
+    .coins-table a td:nth-last-child(-n+2) {
+        display: none;
+    }
+
+}
+</style>
+
+<template>
+    <div id="rect" class="rectange orange"></div>
+    <div id="rect2" class="rectange blanc"></div>
+
+    <div class="container_table" id="tableId">
         <div class="filter">
-            <search-bar @search="handleSearch"></search-bar>
-            <search-bar @search="handleSearch"></search-bar>
+            <Search-bar @search="handleSearch"></Search-bar>
+
+            <filter-selector @ResultCount="handleResultCountChange"></filter-selector>
 
         </div>
 
@@ -74,6 +121,7 @@
 <script>
 import CoinRow from './CoinRow.vue';
 import SearchBar from './SearchBar.vue';
+import FilterSelector from './FilterSelector.vue';
 import TableHeader from './CoinTableHeader.vue';
 import { getCoinsData } from '@/services/api/coinsRepository.js';
 
@@ -82,12 +130,14 @@ export default {
     components: {
         CoinRow,
         SearchBar,
-        TableHeader
+        FilterSelector,
+        TableHeader,
     },
     data() {
         return {
             CoinsData: [],
             searchQuery: null,
+            selectedResultCount: '10',
             sortKey: '',
             sortOrderDirection: 'asc'
         }
@@ -99,8 +149,6 @@ export default {
                 const data = await getCoinsData();
                 this.CoinsData = data;
 
-                // Stocker les données dans le local storage
-                localStorage.setItem('CoinsData', JSON.stringify(data));
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -146,18 +194,24 @@ export default {
             this.sortTable(sortKey, sortOrderDirection); // Ajoutez sortOrderDirection comme argument
 
         },
+        handleResultCountChange(selectedResultCountData) {
+            console.log(selectedResultCountData)
+            this.selectedResultCount = selectedResultCountData; // Mettez à jour la propriété dans le parent
+            const rectangle1 = document.getElementById('rect');
+            const rectangle2 = document.getElementById('rect2');
+
+            if (rect && rect2) {
+                rectangle1.style.height = selectedResultCountData * 85 + 'px';
+                rectangle2.style.height = selectedResultCountData * 85 + 'px';
+            }
+
+
+        },
     },
     created() {
-        // Vérifier si les données existent dans le local storage
-        const storedData = localStorage.getItem('CoinsData');
 
-        if (storedData) {
-            // Si les données existent, les charger depuis le local storage
-            this.CoinsData = JSON.parse(storedData);
-        } else {
-            // Sinon, appeler la fonction pour récupérer les données
-            this.retrieveCoinsData();
-        }
+        this.retrieveCoinsData();
+
     },
     computed: {
         resultQuery() {
@@ -166,9 +220,12 @@ export default {
                     return coin.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
                 });
             } else {
-                return this.CoinsData.slice(0, 10);
+                return this.CoinsData.slice(0, this.selectedResultCount);
             }
+
+
         },
+
     }
 
 }

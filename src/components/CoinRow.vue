@@ -24,6 +24,7 @@
   border-top: 1px solid white;
   border-bottom: 1px solid white;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .coinInfos {
@@ -71,8 +72,9 @@
 
 .coinTitle {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
+  align-items: center;
 }
 
 .coinSymbol {
@@ -80,6 +82,7 @@
   text-transform: uppercase;
   font-weight: 600;
   color: rgba(255, 255, 255, .7);
+  padding-left: 10px;
 
 }
 
@@ -95,6 +98,7 @@
   color: #ff0000;
   filter: drop-shadow(0px 0px 2px #ff0000);
 
+
 }
 
 .neg:before {
@@ -103,6 +107,7 @@
   padding-right: 3px;
   content: url('../images/fleche_haut.svg');
   color: inherit !important;
+
 }
 
 .pos {
@@ -117,21 +122,7 @@
   content: url('../images/fleche_bas.svg');
   border-radius: 10px;
   color: inherit !important;
-}
 
-
-.percent {}
-
-@media (min-width: 1024px) {
-  .coinTitle {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .coinSymbol {
-    padding-left: 10px;
-  }
 }
 </style>
 
@@ -147,7 +138,8 @@
       </div>
     </td>
     <td class="cell">{{ formattedPrice.formattedCurrentPrice }}€</td>
-    <td class="cell percent" :class="{ 'pos': price_change_percentage_24h >= 0, 'neg': price_change_percentage_24h < 0 }">
+    <td class="cell percent"
+      :class="{ 'pos': price_change_percentage_24h >= 0, 'neg': price_change_percentage_24h < 0 }">
       {{ formattedPrice.formattedPriceChangePercentage24h }}%</td>
     <td class="cell">{{ formattedPrice.formattedTotalVolume }}€</td>
     <td class="cell">{{ formattedPrice.formattedMarketCap }}€</td>
@@ -184,4 +176,3 @@ export default {
   }
 }
 </script>
-
