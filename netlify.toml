@@ -1,8 +1,12 @@
 [build]
   # Directory to serve (Vite's output)
   publish = "dist"
-  # Build command - utiliser --no-frozen-lockfile pour permettre l'installation si le lockfile n'est pas à jour
-  command = "pnpm install --no-frozen-lockfile && pnpm run build"
+  # Build command
+  command = "pnpm run build"
+
+[build.environment]
+  # Permettre à pnpm d'installer même si le lockfile n'est pas à jour
+  PNPM_FLAGS = "--no-frozen-lockfile"
 
 [dev]
   # Command to run the dev server
