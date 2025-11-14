@@ -7,11 +7,14 @@
     height: 70px;
     max-width: 1200px;
     width: 100%;
+    min-width: 0;
     /* Utilisez 100% pour occuper la largeur de l'écran ou ajustez selon vos besoins */
     margin: 0 auto;
     /* Centrer le menu horizontalement */
     padding: 0 20px;
     /* Ajoutez une marge intérieure pour l'espace autour du contenu */
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .container_link {
@@ -28,13 +31,17 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    min-width: 100%;
+    max-width: 100%;
     justify-content: center;
     color: white;
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
     z-index: 20;
     pointer-events: none;
+    box-sizing: border-box;
 }
 
 .container * {
@@ -163,20 +170,23 @@
 <template>
     <nav class="container" role="navigation" aria-label="Navigation principale">
         <div class="menu">
-            <router-link class="container_link" to='/' aria-label="Retour à l'accueil">
+            <router-link class="container_link" to='/' @click="handleMenuLinkClick" aria-label="Retour à l'accueil">
                 <img class="logo_img" src="../images/logo.png" alt="Logo Coinito">
                 <div class="logo_title">Coinito</div>
             </router-link>
             <div class="container_link links" role="list">
-                <router-link to='/coin/bitcoin' class="links" aria-label="Voir les détails de Bitcoin">
+                <router-link to='/coin/bitcoin' class="links" @click="handleMenuLinkClick"
+                    aria-label="Voir les détails de Bitcoin">
                     <img src="../images/bitcoin-logo.png" alt="Logo Bitcoin">
                     <div>Bitcoin</div>
                 </router-link>
-                <router-link to='/coin/ethereum' class="links" aria-label="Voir les détails d'Ethereum">
+                <router-link to='/coin/ethereum' class="links" @click="handleMenuLinkClick"
+                    aria-label="Voir les détails d'Ethereum">
                     <img src="../images/eth-logo.png" alt="Logo Ethereum">
                     <div>Ethereum</div>
                 </router-link>
-                <router-link to='/coin/tether' class="links" aria-label="Voir les détails de Tether">
+                <router-link to='/coin/tether' class="links" @click="handleMenuLinkClick"
+                    aria-label="Voir les détails de Tether">
                     <img src="../images/tether-logo.png" alt="Logo Tether">
                     <div>Tether</div>
                 </router-link>
@@ -198,12 +208,17 @@ export default {
     data() {
         return {
             animationsStarted: false,
-            revealCompleteListener: null
+            revealCompleteListener: null,
+            fallbackTimeout: null
         };
     },
     mounted() {
         // Initialiser les animations du menu
         this.initializeMenuAnimations();
+
+        // Vérifier si on vient du menu (navigation interne)
+        const skipLoading = sessionStorage.getItem('skipLoadingScreen');
+        const timeoutDelay = skipLoading === 'true' ? 0 : 3000;
 
         // Écouter l'événement reveal-complete du LoadingScreen
         this.revealCompleteListener = () => {
@@ -212,18 +227,29 @@ export default {
         window.addEventListener('reveal-complete', this.revealCompleteListener);
 
         // Fallback si l'événement n'est pas reçu
-        setTimeout(() => {
+        // Timeout à 0 si on vient du menu, 3000ms sinon
+        this.fallbackTimeout = setTimeout(() => {
             if (!this.animationsStarted) {
                 this.startMenuAnimations();
             }
-        }, 3000);
+            this.fallbackTimeout = null;
+        }, timeoutDelay);
     },
     beforeUnmount() {
         if (this.revealCompleteListener) {
             window.removeEventListener('reveal-complete', this.revealCompleteListener);
         }
+        // Nettoyer le timeout fallback si présent
+        if (this.fallbackTimeout) {
+            clearTimeout(this.fallbackTimeout);
+            this.fallbackTimeout = null;
+        }
     },
     methods: {
+        handleMenuLinkClick() {
+            // Marquer qu'on vient du menu pour éviter l'animation du loading screen
+            sessionStorage.setItem('skipLoadingScreen', 'true');
+        },
         initializeMenuAnimations() {
             // Masquer les éléments du menu au départ
             // Logo

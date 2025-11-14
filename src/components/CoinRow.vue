@@ -14,6 +14,7 @@
   border-top: .5px rgba(255, 255, 255, .4) solid;
   align-items: center;
   padding: 0px 50px;
+  min-height: 80px;
   justify-content: space-between;
   text-decoration: none;
   color: white;

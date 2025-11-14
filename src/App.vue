@@ -18,14 +18,41 @@ export default {
   data() {
     return {
       showLoadingScreen: true,
-      lenis: null
+      lenis: null,
+      isInitialLoad: true
     };
   },
+  watch: {
+    '$route'(to, from) {
+      // Si ce n'est pas le chargement initial et qu'on vient du menu, ne pas afficher le loading screen
+      if (!this.isInitialLoad) {
+        const skipLoading = sessionStorage.getItem('skipLoadingScreen');
+        if (skipLoading === 'true') {
+          console.log('🚀 Route change - skipping loading screen (navigation from menu)');
+          this.showLoadingScreen = false;
+          // Ne pas nettoyer le flag ici, laisser home.vue le faire après utilisation
+        }
+      }
+    }
+  },
   mounted() {
-    console.log('🚀 App mounted - showing loading screen');
+    // Vérifier si on doit sauter le loading screen au chargement initial
+    const skipLoading = sessionStorage.getItem('skipLoadingScreen');
+    if (skipLoading === 'true') {
+      console.log('🚀 App mounted - skipping loading screen (navigation from menu)');
+      this.showLoadingScreen = false;
+      // Ne pas nettoyer le flag ici, laisser home.vue le faire après utilisation
+    } else {
+      console.log('🚀 App mounted - showing loading screen');
+    }
 
     // Initialiser Lenis pour le smooth scroll
     this.initLenis();
+
+    // Marquer que le chargement initial est terminé après un court délai
+    setTimeout(() => {
+      this.isInitialLoad = false;
+    }, 100);
   },
   beforeUnmount() {
     // Nettoyer Lenis

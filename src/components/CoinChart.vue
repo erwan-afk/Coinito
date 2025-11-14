@@ -193,7 +193,7 @@
 
 .historical-chart-container {
     width: 100%;
-    height: 200px;
+    flex: 1;
     position: relative;
 }
 
@@ -240,7 +240,7 @@
     }
 
     .historical-chart-container {
-        height: 220px;
+        height: 300px;
     }
 }
 
@@ -272,7 +272,7 @@
     }
 
     .historical-chart-container {
-        height: 200px;
+        height: 300px;
     }
 }
 
@@ -304,7 +304,7 @@
     }
 
     .historical-chart-container {
-        height: 180px;
+        height: 300px;
     }
 }
 
@@ -326,7 +326,7 @@
     }
 
     .historical-chart-container {
-        height: 160px;
+        height: 300px;
     }
 }
 
@@ -395,7 +395,7 @@
     }
 
     .historical-chart-container {
-        height: 160px;
+        height: 300px;
     }
 }
 
@@ -434,7 +434,7 @@
     }
 
     .historical-chart-container {
-        height: 140px;
+        height: 300px;
     }
 
     .cooldown-indicator {

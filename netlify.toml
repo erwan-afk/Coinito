@@ -1,0 +1,20 @@
+[build]
+  # Directory to serve (Vite's output)
+  publish = "dist"
+  # Build command
+  command = "npm run build"
+
+[dev]
+  # Command to run the dev server
+  command = "vite"
+  # Port for the dev server (Vite default)
+  port = 5173
+  # Framework detection
+  framework = "vite"
+
+[[redirects]]
+  # Redirect all Netlify function requests
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+

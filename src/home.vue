@@ -248,7 +248,8 @@ export default {
     data() {
         return {
             animationsStarted: false,
-            revealCompleteListener: null
+            revealCompleteListener: null,
+            fallbackTimeout: null
         };
     },
     mounted() {
@@ -285,18 +286,31 @@ export default {
         // Initialiser les animations des éléments
         this.initializeAnimations();
 
-        // Écouter l'événement reveal-complete du LoadingScreen
+        // Vérifier si on vient du menu (navigation interne)
+        const skipLoading = sessionStorage.getItem('skipLoadingScreen');
+        const timeoutDelay = skipLoading === 'true' ? 0 : 2800;
+
+        if (skipLoading === 'true') {
+            // Si on vient du menu, lancer les animations immédiatement sans attendre le loading screen
+            console.log('🚀 Home mounted - starting animations immediately (navigation from menu)');
+            // Nettoyer le flag après utilisation
+            sessionStorage.removeItem('skipLoadingScreen');
+        }
+
+        // Comportement normal : attendre l'événement reveal-complete du LoadingScreen
         this.revealCompleteListener = () => {
             this.startHomeAnimations();
         };
         window.addEventListener('reveal-complete', this.revealCompleteListener);
 
         // Vérifier si le loading screen a déjà été complété (fallback)
-        setTimeout(() => {
+        // Timeout à 0 si on vient du menu, 2800ms sinon
+        this.fallbackTimeout = setTimeout(() => {
             if (!this.animationsStarted) {
                 this.startHomeAnimations();
             }
-        }, 2800);
+            this.fallbackTimeout = null;
+        }, timeoutDelay);
     },
 
     beforeUnmount() {
@@ -306,6 +320,11 @@ export default {
         }
         if (this.revealCompleteListener) {
             window.removeEventListener('reveal-complete', this.revealCompleteListener);
+        }
+        // Nettoyer le timeout fallback si présent
+        if (this.fallbackTimeout) {
+            clearTimeout(this.fallbackTimeout);
+            this.fallbackTimeout = null;
         }
     },
     methods: {

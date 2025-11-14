@@ -1,8 +1,8 @@
 <style>
 .coin-page {
-
     color: white;
     min-height: 100vh;
+    margin-top: 100px;
 }
 
 .coin-container {
@@ -107,6 +107,10 @@
 
 /* Small Mobile - Téléphones */
 @media (max-width: 768px) {
+    .coin-page {
+        margin-top: 90px;
+    }
+
     .coin-main-layout {
         gap: 15px;
         margin-bottom: 20px;
@@ -120,6 +124,10 @@
 
 /* Extra Small Mobile */
 @media (max-width: 480px) {
+    .coin-page {
+        margin-top: 85px;
+    }
+
     .coin-container {
         padding: 10px 15px;
     }
