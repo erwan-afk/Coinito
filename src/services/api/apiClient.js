@@ -1,30 +1,25 @@
-import { API_CONFIG, validateApiKey } from '@/config/api.js';
-
 /**
- * Client HTTP centralisé pour les appels API CoinGecko
+ * Client HTTP centralisé pour les appels API CoinGecko via Netlify Function
+ * The API key is handled server-side in the Netlify Function
  */
 class ApiClient {
     constructor() {
-        this.baseURL = API_CONFIG.baseURL;
+        // Use Netlify Function as the base URL (API key is handled server-side)
+        this.baseURL = '/.netlify/functions/coin-gecko';
     }
 
     /**
-     * Effectue une requête GET vers l'API CoinGecko
+     * Effectue une requête GET vers l'API CoinGecko via Netlify Function
      * @param {string} endpoint - L'endpoint de l'API (sans le baseURL)
      * @param {Object} params - Paramètres de requête à ajouter à l'URL
      * @returns {Promise<any>} Les données de la réponse
      * @throws {Error} Si la requête échoue
      */
     async get(endpoint, params = {}) {
-        validateApiKey();
-
         // Construire l'URL avec les paramètres
-        const url = new URL(`${this.baseURL}${endpoint}`);
+        const url = new URL(`${this.baseURL}${endpoint}`, window.location.origin);
         
-        // Ajouter la clé API
-        url.searchParams.append('x_cg_demo_api_key', API_CONFIG.apiKey);
-        
-        // Ajouter les autres paramètres
+        // Ajouter les paramètres de requête
         Object.keys(params).forEach(key => {
             url.searchParams.append(key, params[key]);
         });
@@ -33,7 +28,8 @@ class ApiClient {
             const response = await fetch(url.toString());
 
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                throw new Error(`HTTP error! Status: ${response.status} - ${errorData.error || 'Unknown error'}`);
             }
 
             const data = await response.json();

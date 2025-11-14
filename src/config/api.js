@@ -1,22 +1,19 @@
 /**
  * Configuration de l'API CoinGecko
- * La clé API doit être définie dans le fichier .env avec la variable 
+ * Note: The API key is now handled server-side via Netlify Functions
+ * The key should be set as COINGECKO_API_KEY (not VITE_COINGECKO_API_KEY) in Netlify environment variables
  */
 export const API_CONFIG = {
     baseURL: 'https://api.coingecko.com/api/v3',
-    apiKey: import.meta.env.VITE_COINGECKO_API_KEY || '',
+    // API key is no longer needed client-side - handled by Netlify Function
 };
 
 /**
- * Vérifie si la clé API est configurée
- * @throws {Error} Si la clé API n'est pas définie
+ * Validates API key (no longer required client-side)
+ * The API key is now handled server-side in the Netlify Function
  */
 export function validateApiKey() {
-    if (!API_CONFIG.apiKey) {
-        throw new Error(
-            ' n\'est pas définie. ' +
-            'Veuillez créer un fichier .env à la racine du projet avec votre clé API.'
-        );
-    }
+    // No validation needed client-side - API key is handled server-side
+    // This function is kept for backwards compatibility but does nothing
 }
 
