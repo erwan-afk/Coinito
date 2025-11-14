@@ -22,6 +22,7 @@
     padding: 50px;
     display: flex;
     justify-content: space-between;
+    gap: 15px;
 }
 
 .rectange {
@@ -64,6 +65,17 @@
     .coins-table a td:nth-child(3) {
         display: none;
     }
+
+    .filter {
+        padding: 15px;
+    }
+
+    .coin-row {
+        padding: 0px 15px;
+    }
+
+
+
 }
 
 @media (max-width: 768px) {
@@ -74,6 +86,10 @@
     .coinSymbol,
     .coins-table a td:nth-child(3) {
         display: none;
+    }
+
+    .filter {
+        padding: 15px;
     }
 }
 

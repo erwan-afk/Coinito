@@ -18,8 +18,10 @@
 #tableHeader th:before {
     content: ' \25B2';
     padding-right: 5px;
+    min-width: 25px;
     color: inherit;
     transition: all 0.3s ease;
+
 }
 
 #tableHeader th {

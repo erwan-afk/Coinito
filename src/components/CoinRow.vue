@@ -1,12 +1,17 @@
 <style>
 .coinImg {
   width: 30px;
+  min-width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .coinDivImg {
   display: flex;
   align-items: center;
-  padding-right: 30px;
+  justify-content: center;
+  min-width: 60px;
 }
 
 .coin-row {
@@ -38,7 +43,24 @@
   flex: 1;
   align-self: stretch;
   align-items: center;
+  justify-content: flex-start;
 
+}
+
+.cell:before {
+  content: '';
+  padding-right: 5px;
+  min-width: 25px;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.coinInfos:before {
+  content: '';
+
+
+  color: inherit;
+  transition: all 0.3s ease;
 }
 
 .cell {
@@ -77,8 +99,8 @@
 .coinTitle {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .coinSymbol {
@@ -97,6 +119,8 @@
   color: white;
 
 }
+
+
 
 .neg {
   color: #ff0000;
@@ -127,6 +151,15 @@
   border-radius: 10px;
   color: inherit !important;
 
+}
+
+@media (max-width: 500px) {
+  .coinName {
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+
+  }
 }
 </style>
 

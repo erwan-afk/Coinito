@@ -18,7 +18,7 @@
   align-items: center;
   border: 1px solid white;
   border-radius: 20px;
-  margin: 15px;
+  margin: 15px 30px;
   backdrop-filter: blur(8px);
 }
 
@@ -74,6 +74,8 @@
 
   .global_stats {
     width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
   }
 
   .info {
@@ -118,11 +120,11 @@
         <span class="info">Domination du marché :</span>
         <div>
           <span class="data">{{ resultDominance.largest1.key.toUpperCase() }} {{
-          resultDominance.largest1.value.toFixed(1)
-        }}%</span>
+            resultDominance.largest1.value.toFixed(1)
+          }}%</span>
           <div class="line"></div>
           <span class="data"> {{ resultDominance.largest2.key.toUpperCase() }} {{
-          resultDominance.largest2.value.toFixed(1) }}%</span>
+            resultDominance.largest2.value.toFixed(1) }}%</span>
         </div>
       </div>
 

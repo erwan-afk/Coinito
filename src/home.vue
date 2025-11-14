@@ -169,9 +169,38 @@
 
 @media (max-width: 500px) {
 
+    .description {
+        padding: 0 30px;
+        font-size: 15px;
+    }
+
     .title {
         font-size: 40px;
-        line-height: 55px;
+        line-height: 40px;
+    }
+
+    .main_title {
+        font-size: 40px;
+        line-height: 40px;
+    }
+
+    .heroimage img {
+
+        width: 80%;
+
+    }
+
+    .hero_section {
+        gap: 20px;
+    }
+
+    .desktop-only {
+        display: none;
+    }
+
+    .heroimage img {
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.4);
     }
 
 }
@@ -182,7 +211,7 @@
     <div class="first_section" id="first_section" ref="first_section">
         <div class="small_title">Un projet Vue.js</div>
         <div class="main_title">Explorez le monde <br>des cryptos.</div>
-        <div class="description">Coinito vous permet de trier, filtrer et rechercher <br>
+        <div class="description">Coinito vous permet de trier, filtrer et rechercher <br class="desktop-only">
             des informations sur les coins les plus connus du marché mondial. </div>
         <GlobalDataWidget />
 
@@ -203,9 +232,11 @@
         <div class="title">Partez à la découverte <br>
             de ces richesses.
         </div>
-        <div class="description">Elle représentent une révolution financière en utilisant la blockchain pour <br>assurer
+        <div class="description">Elle représentent une révolution financière en utilisant la blockchain pour <br
+                class="desktop-only">assurer
             la
-            sécurité et la transparence des transactions, tout en défiant les <br>modèles traditionnels de monnaie émise
+            sécurité et la transparence des transactions, tout en défiant les <br class="desktop-only">modèles
+            traditionnels de monnaie émise
             par
             les gouvernements.
         </div>

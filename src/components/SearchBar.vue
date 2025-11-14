@@ -26,9 +26,10 @@ input {
     font-weight: 600;
     font-size: 20px;
 
+
 }
 
-input::placeholder {}
+
 
 .sr-only {
     position: absolute;
@@ -51,14 +52,14 @@ input:focus {
 
 @media (max-width: 700px) {
     input {
-        width: 30vw;
+        width: 100%;
     }
 
 }
 
 @media (max-width: 550px) {
     input {
-        width: 60px;
+        width: 100%;
     }
 
 }
@@ -66,14 +67,8 @@ input:focus {
 
 <template>
     <div class="search_container">
-        <input 
-            type="text" 
-            v-model="searchQuery" 
-            @input="updateSearchQuery" 
-            placeholder="Rechercher"
-            aria-label="Rechercher une cryptomonnaie"
-            aria-describedby="search-description"
-        >
+        <input type="text" v-model="searchQuery" @input="updateSearchQuery" placeholder="Rechercher"
+            aria-label="Rechercher une cryptomonnaie" aria-describedby="search-description">
         <span id="search-description" class="sr-only">Recherchez une cryptomonnaie par son nom</span>
     </div>
 </template>

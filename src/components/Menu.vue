@@ -122,7 +122,7 @@
 
 @media (max-width: 768px) {
     .menu {
-        padding: 0 15px;
+        padding: 0 30px;
         height: 60px;
     }
 
@@ -146,7 +146,7 @@
 
 @media (max-width: 480px) {
     .menu {
-        padding: 0 10px;
+        padding: 0 30px;
         height: 55px;
     }
 

@@ -12,7 +12,7 @@
 
 select {
     background: none;
-
+    height: 100%;
     color: white;
     padding: 15px 10px 15px 15px;
     font-weight: 600;
