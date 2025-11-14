@@ -30,10 +30,22 @@ input {
 
 input::placeholder {}
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
 
 input:focus {
-
     border: none;
+    outline: 2px solid #FFBB00;
+    outline-offset: 2px;
 }
 
 
@@ -54,7 +66,15 @@ input:focus {
 
 <template>
     <div class="search_container">
-        <input type="text" v-model="searchQuery" @input="updateSearchQuery" placeholder="Rechercher">
+        <input 
+            type="text" 
+            v-model="searchQuery" 
+            @input="updateSearchQuery" 
+            placeholder="Rechercher"
+            aria-label="Rechercher une cryptomonnaie"
+            aria-describedby="search-description"
+        >
+        <span id="search-description" class="sr-only">Recherchez une cryptomonnaie par son nom</span>
     </div>
 </template>
 
@@ -64,14 +84,23 @@ export default {
     data() {
         return {
             searchQuery: '',
+            debounceTimer: null,
         };
     },
     methods: {
         updateSearchQuery() {
-            // Mettre à jour la valeur de searchQuery dans le local storage
+            // Annuler le timer précédent s'il existe
+            if (this.debounceTimer) {
+                clearTimeout(this.debounceTimer);
+            }
+
+            // Sauvegarder immédiatement dans le localStorage
             localStorage.setItem('searchQuery', this.searchQuery);
-            // Émettre un événement pour informer le parent du changement de recherche
-            this.$emit('search', this.searchQuery);
+
+            // Débouncer l'émission de l'événement
+            this.debounceTimer = setTimeout(() => {
+                this.$emit('search', this.searchQuery);
+            }, 300);
         },
     },
     created() {
@@ -80,6 +109,12 @@ export default {
         if (storedSearchQuery) {
             this.searchQuery = storedSearchQuery;
             this.$emit('search', this.searchQuery);
+        }
+    },
+    beforeUnmount() {
+        // Nettoyer le timer lors du démontage du composant
+        if (this.debounceTimer) {
+            clearTimeout(this.debounceTimer);
         }
     },
 };

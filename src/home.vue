@@ -1,7 +1,5 @@
 <style>
 .first_section {
-    /*background-image: url("./images/background_first_section.png"); */
-    /*background: radial-gradient(50% 75% at 50% 100%, rgba(255, 187, 0, 0.2) 0%, rgba(255, 187, 0, 0) 100%);*/
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -10,12 +8,14 @@
     align-items: center;
     background-position: 0% 10%;
     overflow: hidden;
+    position: relative;
+    z-index: 10;
+
+    padding-top: 10vh;
 
 }
 
 .second_section {
-    /*background-image: url("./images/background_first_section.png"); */
-    /*background: radial-gradient(50% 75% at 50% 100%, rgba(255, 187, 0, 0.2) 0%, rgba(255, 187, 0, 0) 100%);*/
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -24,16 +24,22 @@
 
 }
 
-.third_section {
-    /*background-image: url("./images/background_first_section.png"); */
-    /*background: radial-gradient(50% 75% at 50% 100%, rgba(255, 187, 0, 0.2) 0%, rgba(255, 187, 0, 0) 100%);*/
+.hero_section {
+    width: 100%;
+    gap: 50px;
+    margin-top: -1vh;
+    position: relative;
+    z-index: 5;
+    margin-bottom: 10vh;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
-    margin-top: 10vh;
-
-
+    flex-direction: column;
+    background-image: url("/src/images/bgherosection.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-bottom: 10vh;
 }
 
 
@@ -55,16 +61,6 @@
 
 
 
-.title {
-    margin-top: 3vh;
-    font-family: var(--fallback-font);
-    color: white;
-    font-size: 64px;
-    text-align: center;
-    letter-spacing: -3px;
-    line-height: 70px;
-    z-index: 1;
-}
 
 
 
@@ -117,90 +113,17 @@
     filter: drop-shadow(0px 0px 2px #0099FF);
 }
 
-.share {
-    display: flex;
-    margin-top: 5vh;
-}
 
-.share div:not(:last-child) {
-    margin-right: 35px;
-}
 
-.thanks {
+.title {
     margin-top: 10vh;
-
-    color: white;
-    font-weight: 600;
-    font-size: 40px;
-    padding: 30px 50px;
-
-}
-
-.copyright {
-    margin: 5vh 0px;
-    color: rgba(255, 255, 255, .7);
-    text-align: center;
-    line-height: 35px;
-    font-weight: 500;
-    font-size: 20px;
-    padding: 30px 50px;
-}
-
-.framework {
-    margin: 15vh 0px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    text-align: left;
-    padding: 50px;
-    z-index: 1;
-    background-color: rgba(255, 255, 255, .1);
-    backdrop-filter: blur(100px);
-    gap: 35px;
-
-}
-
-.framework img {
-    position: absolute;
-    transform: translate(264px, 30px);
-    transform: translate(calc(264px + var(--translate-x)), calc(30px + var(--translate-y)));
-    transform-style: preserve-3d;
-    transition: transform 1.5s cubic-bezier(0.05, 0.5, 0, 1);
-    will-change: transform;
-}
-
-.third_section svg {
-    position: absolute;
-    z-index: -1;
-    transform: translate(140px, -100px);
-
-}
-
-.framework .title {
-    text-align: left;
-    width: 480px;
-    margin-top: 0px;
-    font-size: 64px;
-}
-
-.description_framework {
-    color: rgba(255, 255, 255, .7);
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 35px;
-}
-
-.internet {
-
-    margin-top: 5vh;
-
 }
 
 .img_coin_left {
     position: absolute;
     width: 400px;
-    transform: translate(calc(-150% + var(--translate-x)), calc(-60% + var(--translate-y)));
+    --scale: 1;
+    transform: translate(calc(-150% + var(--translate-x)), calc(-60% + var(--translate-y))) scale(var(--scale));
     transform-style: preserve-3d;
     transition: transform 1.5s cubic-bezier(0.05, 0.5, 0, 1);
     will-change: transform;
@@ -209,90 +132,46 @@
 .img_coin_right {
     position: absolute;
     width: 450px;
-    transform: translate(calc(140% + var(--translate-x)), calc(20% + var(--translate-y)));
+    --scale: 1;
+    transform: translate(calc(140% + var(--translate-x)), calc(20% + var(--translate-y))) scale(var(--scale));
     transform-style: preserve-3d;
     transition: transform 1.5s cubic-bezier(0.05, 0.5, 0, 1);
     will-change: transform;
 }
 
+.heroimage {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
 
+.heroimage img {
+    border-radius: 20px;
+    border: 4px solid rgba(255, 255, 255, 0.4);
+    width: 50%;
+    transition: transform 0.3s ease, border 0.3s ease;
+    transform-origin: center center;
+}
 
-
-
-
-@media (max-width: 768px) {
-
-    .framework img {
-        width: 180px;
-        transform: translate(120px, 30px);
-
-    }
-
-    .framework .title {
-        font-size: 32px;
-        width: 180px;
-        line-height: 38px;
-    }
-
-    .framework {
-        padding: 30px;
-        width: 200px;
-        backdrop-filter: blur(50px);
-        gap: 20px;
-    }
-
-    .description_framework {
-        font-size: 11px;
-        line-height: 20px;
-    }
-
-    .third_section svg {
-        transform: translate(30px, -150px);
-        width: 200px;
-        height: 250px;
-    }
-
-    .framework img {
-        width: 150px;
-    }
-
-
+.heroimage img:hover {
+    transform: scale(1.02);
+    border: 4px solid rgba(255, 255, 255, .5);
 
 }
+
+
+
+
+
+@media (max-width: 768px) {}
 
 @media (max-width: 500px) {
 
     .title {
         font-size: 40px;
         line-height: 55px;
-    }
-
-
-
-    .share {
-        width: 200px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 20px 20px;
-    }
-
-    .share .icon img {
-        width: 60px;
-    }
-
-    .share div:not(:last-child) {
-        margin: 0px;
-    }
-
-    .footer-title {
-        width: 80vw;
-    }
-
-    .thanks {
-        font-size: 32px;
-        padding: 20px 40px;
     }
 
 }
@@ -307,8 +186,8 @@
             des informations sur les coins les plus connus du marché mondial. </div>
         <GlobalDataWidget />
 
-        <img id="coinleft" class="img_coin_left" src="./images/coin_left.png" alt="">
-        <img id="coinright" class="img_coin_right" src="./images/coin_right.png" alt="">
+        <img ref="imgCoinLeft" class="img_coin_left" src="./images/coin_left.png" alt="">
+        <img ref="imgCoinRight" class="img_coin_right" src="./images/coin_right.png" alt="">
 
         <div class="gradient" ref="gradient"></div>
 
@@ -319,7 +198,8 @@
         </div>
     </div>
 
-    <div class="second_section" id="second_section">
+    <div class="hero_section">
+
         <div class="title">Partez à la découverte <br>
             de ces richesses.
         </div>
@@ -330,6 +210,18 @@
             les gouvernements.
         </div>
 
+
+        <div class="heroimage" @click="scrollToTable">
+            <img src="./images/heroimage.jpg" alt="">
+        </div>
+
+    </div>
+
+    <div class="second_section" id="second_section">
+
+
+
+
         <CoinTable />
 
     </div>
@@ -339,6 +231,7 @@
 </template>
 
 <script>
+import { gsap } from 'gsap'
 import GlobalDataWidget from './components/GlobalDataWidget.vue'
 import CoinTable from './components/CoinTable.vue'
 import Menu from './components/Menu.vue'
@@ -352,45 +245,193 @@ export default {
         Menu,
         Footer
     },
+    data() {
+        return {
+            animationsStarted: false,
+            revealCompleteListener: null
+        };
+    },
     mounted() {
-        this.handleResize(); // Appeler handleResize() lorsque le composant est monté
+        this.handleResize();
         window.addEventListener('resize', this.handleResize);
-
-        const imgCoinLeft = document.querySelector('.img_coin_left');
-        const imgCoinRight = document.querySelector('.img_coin_right');
 
         const smooth = 0.03;
         const initialTranslateX = (window.innerWidth / 2) * smooth;
         const initialTranslateY = (window.innerHeight / 2) * smooth;
 
         // Appliquer les transformations initiales
-        imgCoinLeft.style.setProperty('--translate-x', `${initialTranslateX}px`);
-        imgCoinLeft.style.setProperty('--translate-y', `${initialTranslateY}px`);
+        if (this.$refs.imgCoinLeft && this.$refs.imgCoinRight) {
+            this.$refs.imgCoinLeft.style.setProperty('--translate-x', `${initialTranslateX}px`);
+            this.$refs.imgCoinLeft.style.setProperty('--translate-y', `${initialTranslateY}px`);
 
-        imgCoinRight.style.setProperty('--translate-x', `${-initialTranslateX}px`);
-        imgCoinRight.style.setProperty('--translate-y', `${-initialTranslateY}px`);
+            this.$refs.imgCoinRight.style.setProperty('--translate-x', `${-initialTranslateX}px`);
+            this.$refs.imgCoinRight.style.setProperty('--translate-y', `${-initialTranslateY}px`);
 
-        document.addEventListener('mousemove', (event) => {
-            const translateX = (event.clientX - window.innerWidth / 2) * smooth;
-            const translateY = (event.clientY - window.innerHeight / 2) * smooth;
+            this.mousemoveHandler = (event) => {
+                const translateX = (event.clientX - window.innerWidth / 2) * smooth;
+                const translateY = (event.clientY - window.innerHeight / 2) * smooth;
 
-            // Appliquer les transformations basées sur la souris en utilisant des variables CSS
-            imgCoinLeft.style.setProperty('--translate-x', `${translateX}px`);
-            imgCoinLeft.style.setProperty('--translate-y', `${translateY}px`);
+                // Appliquer les transformations basées sur la souris en utilisant des variables CSS
+                this.$refs.imgCoinLeft.style.setProperty('--translate-x', `${translateX}px`);
+                this.$refs.imgCoinLeft.style.setProperty('--translate-y', `${translateY}px`);
 
-            imgCoinRight.style.setProperty('--translate-x', `${translateX}px`);
-            imgCoinRight.style.setProperty('--translate-y', `${translateY}px`);
-        });
+                this.$refs.imgCoinRight.style.setProperty('--translate-x', `${translateX}px`);
+                this.$refs.imgCoinRight.style.setProperty('--translate-y', `${translateY}px`);
+            };
+
+            document.addEventListener('mousemove', this.mousemoveHandler);
+        }
+
+        // Initialiser les animations des éléments
+        this.initializeAnimations();
+
+        // Écouter l'événement reveal-complete du LoadingScreen
+        this.revealCompleteListener = () => {
+            this.startHomeAnimations();
+        };
+        window.addEventListener('reveal-complete', this.revealCompleteListener);
+
+        // Vérifier si le loading screen a déjà été complété (fallback)
+        setTimeout(() => {
+            if (!this.animationsStarted) {
+                this.startHomeAnimations();
+            }
+        }, 2800);
     },
 
-    destroyed() {
+    beforeUnmount() {
         window.removeEventListener('resize', this.handleResize);
+        if (this.mousemoveHandler) {
+            document.removeEventListener('mousemove', this.mousemoveHandler);
+        }
+        if (this.revealCompleteListener) {
+            window.removeEventListener('reveal-complete', this.revealCompleteListener);
+        }
     },
     methods: {
         handleResize() {
             let height = this.$refs.first_section.clientHeight;
             this.$refs.gradient.style.height = (height + 50) + 'px';
         },
+
+        scrollToTable() {
+            const targetElement = document.querySelector('#second_section');
+            if (targetElement) {
+                // Utiliser Lenis pour le smooth scroll si disponible
+                if (this.$root.lenis) {
+                    this.$root.lenis.scrollTo(targetElement, {
+                        offset: 0,
+                        duration: 1.5,
+                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                    });
+                } else {
+                    // Fallback vers le scroll natif
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        },
+
+        initializeAnimations() {
+            // Masquer tous les éléments au départ
+            gsap.set([
+                '.main_title',
+                '.description',
+                '.small_title',
+                '.global_stats'
+            ], {
+                opacity: 0,
+                y: 30
+            });
+
+            // Les images de coins commencent à scale 0.8 en utilisant la variable CSS --scale
+            // Cela préserve les transformations translate() existantes
+            const coinImages = gsap.utils.toArray(['.img_coin_left', '.img_coin_right']);
+            coinImages.forEach(img => {
+                gsap.set(img, {
+                    opacity: 0,
+                    '--scale': 0.8
+                });
+            });
+
+            console.log('✅ Éléments de home.vue masqués');
+        },
+
+        startHomeAnimations() {
+            if (this.animationsStarted) {
+                return; // Éviter de lancer l'animation plusieurs fois
+            }
+
+            this.animationsStarted = true;
+            console.log('🎬 Starting home elements animation sequence...');
+
+            // Créer la timeline d'animation
+            const homeTimeline = gsap.timeline();
+
+            // Attendre 0.5s après la révélation pour commencer
+            homeTimeline.to({}, { duration: 0.0 })
+
+                // 1. Main title apparaît en premier
+                .to(gsap.utils.toArray('.main_title'), {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    onStart: () => console.log('📝 Main title animating...'),
+                    onComplete: () => console.log('✅ Main title done')
+                }, '')
+
+                // 2. Description apparaît ensuite
+                .to(gsap.utils.toArray('.description'), {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    onStart: () => console.log('📝 Description animating...'),
+                    onComplete: () => console.log('✅ Description done')
+                }, '-=0.2')
+
+                // 3. Small title apparaît
+                .to(gsap.utils.toArray('.small_title'), {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    onStart: () => console.log('📝 Small title animating...'),
+                    onComplete: () => console.log('✅ Small title done')
+                }, '-=0.5')
+
+                // 4. Images des coins apparaissent avec scale (en utilisant la variable CSS --scale)
+                .to(gsap.utils.toArray('.img_coin_left, .img_coin_right'), {
+                    opacity: 1,
+                    '--scale': 1,
+                    duration: 1,
+                    ease: 'power3.out',
+                    stagger: 0.1,
+                    onStart: () => console.log('📝 Coin images animating...'),
+                    onComplete: () => console.log('✅ Coin images done')
+                }, '-=1.5')
+
+                // 5. GlobalDataWidget apparaît
+                .to(gsap.utils.toArray('.global_stats'), {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    onStart: () => console.log('📝 GlobalDataWidget animating...'),
+                    onComplete: () => console.log('✅ GlobalDataWidget done')
+                }, '-=1.2')
+
+                // 6. Animation des cartes crypto (si présentes)
+                .to(gsap.utils.toArray('.coin-card'), {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    ease: 'power3.out',
+                    stagger: 0.1,
+                    onStart: () => console.log('📝 Coin cards animating...'),
+                    onComplete: () => console.log('✅ Coin cards done')
+                }, '-=0.2');
+        }
     }
 }
 </script>

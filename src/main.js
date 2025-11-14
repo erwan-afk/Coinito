@@ -1,14 +1,19 @@
 import './assets/main.css';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import { defineAsyncComponent } from 'vue';
 
 import App from './App.vue';
-import Coin from './coin.vue';
-import Home from './home.vue';
+
+// Lazy loading des routes
+const Home = defineAsyncComponent(() => import('./home.vue'));
+const Coin = defineAsyncComponent(() => import('./coin.vue'));
+
 
 const routes = [
     { path: '/', component: Home, name: 'Home' },
     { path: '/coin/:id', component: Coin, name: 'Coin' }
+
 ];
 
 

@@ -24,11 +24,21 @@
 }
 
 .container {
+    padding-top: 30px;
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: center;
     color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.container * {
+    pointer-events: auto;
 }
 
 .container a:link,
@@ -104,8 +114,46 @@
 
 
 @media (max-width: 768px) {
+    .menu {
+        padding: 0 15px;
+        height: 60px;
+    }
+
+    .logo_img {
+        width: 20px;
+    }
+
+    .logo_title {
+        font-size: 16px;
+    }
+
     .links {
         display: none;
+    }
+
+    .btn div {
+        padding: 6px 14px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu {
+        padding: 0 10px;
+        height: 55px;
+    }
+
+    .logo_img {
+        width: 18px;
+    }
+
+    .logo_title {
+        font-size: 15px;
+    }
+
+    .btn div {
+        padding: 5px 10px;
+        font-size: 13px;
     }
 }
 
@@ -113,42 +161,153 @@
 </style>
 
 <template>
-    <div class="container">
+    <nav class="container" role="navigation" aria-label="Navigation principale">
         <div class="menu">
-            <router-link class="container_link" to='/'>
-                <img class="logo_img" src="../images/logo.png" alt="">
+            <router-link class="container_link" to='/' aria-label="Retour à l'accueil">
+                <img class="logo_img" src="../images/logo.png" alt="Logo Coinito">
                 <div class="logo_title">Coinito</div>
             </router-link>
-            <div class="container_link links">
-                <router-link to='/coin/bitcoin' class="links">
-                    <img src="../images/bitcoin-logo.png" alt="">
+            <div class="container_link links" role="list">
+                <router-link to='/coin/bitcoin' class="links" aria-label="Voir les détails de Bitcoin">
+                    <img src="../images/bitcoin-logo.png" alt="Logo Bitcoin">
                     <div>Bitcoin</div>
                 </router-link>
-                <router-link to='/coin/ethereum' class="links">
-                    <img src="../images/eth-logo.png" alt="">
+                <router-link to='/coin/ethereum' class="links" aria-label="Voir les détails d'Ethereum">
+                    <img src="../images/eth-logo.png" alt="Logo Ethereum">
                     <div>Ethereum</div>
                 </router-link>
-                <router-link to='/coin/tether' class="links">
-                    <img src="../images/tether-logo.png" alt="">
+                <router-link to='/coin/tether' class="links" aria-label="Voir les détails de Tether">
+                    <img src="../images/tether-logo.png" alt="Logo Tether">
                     <div>Tether</div>
                 </router-link>
             </div>
 
-            <a href="#second_section" class="btn">
+            <a href="#second_section" class="btn" @click.prevent="scrollToSection"
+                aria-label="Aller à la section de découverte">
                 <div>Découvrir</div>
             </a>
-
-
         </div>
-    </div>
+    </nav>
 </template>
 
 <script>
-
-
+import { gsap } from 'gsap';
 
 export default {
     name: 'Menu',
+    data() {
+        return {
+            animationsStarted: false,
+            revealCompleteListener: null
+        };
+    },
+    mounted() {
+        // Initialiser les animations du menu
+        this.initializeMenuAnimations();
 
+        // Écouter l'événement reveal-complete du LoadingScreen
+        this.revealCompleteListener = () => {
+            this.startMenuAnimations();
+        };
+        window.addEventListener('reveal-complete', this.revealCompleteListener);
+
+        // Fallback si l'événement n'est pas reçu
+        setTimeout(() => {
+            if (!this.animationsStarted) {
+                this.startMenuAnimations();
+            }
+        }, 3000);
+    },
+    beforeUnmount() {
+        if (this.revealCompleteListener) {
+            window.removeEventListener('reveal-complete', this.revealCompleteListener);
+        }
+    },
+    methods: {
+        initializeMenuAnimations() {
+            // Masquer les éléments du menu au départ
+            // Logo
+            gsap.set('.menu .container_link:first-child', {
+                opacity: 0,
+                y: -20
+            });
+
+            // Conteneur des liens
+            gsap.set('.menu .container_link.links', {
+                opacity: 0,
+                y: -20
+            });
+
+            // Bouton
+            gsap.set('.menu .btn', {
+                opacity: 0,
+                scale: 0.8
+            });
+
+            console.log('✅ Éléments du menu masqués');
+        },
+
+        startMenuAnimations() {
+            if (this.animationsStarted) {
+                return;
+            }
+
+            this.animationsStarted = true;
+            console.log('🎬 Starting menu animations...');
+
+            // Créer la timeline d'animation du menu
+            const menuTimeline = gsap.timeline();
+
+            // 1. Logo apparaît en premier
+            menuTimeline.to('.menu .container_link:first-child', {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power3.out',
+                onStart: () => console.log('📝 Logo animating...'),
+                onComplete: () => console.log('✅ Logo done')
+            })
+
+                // 2. Conteneur des liens apparaît
+                .to('.menu .container_link.links', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'power3.out',
+                    onStart: () => console.log('📝 Links container animating...'),
+                    onComplete: () => console.log('✅ Links container done')
+                }, '-=0.3')
+
+                // 3. Bouton "Découvrir" apparaît avec un scale
+                .to('.menu .btn', {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.6,
+                    ease: 'back.out(1.7)',
+                    onStart: () => console.log('📝 Button animating...'),
+                    onComplete: () => console.log('✅ Button done')
+                }, '-=0.2');
+        },
+
+        scrollToSection(event) {
+            const targetId = event.currentTarget.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Utiliser Lenis pour le smooth scroll si disponible
+                    if (this.$root.lenis) {
+                        this.$root.lenis.scrollTo(targetElement, {
+                            offset: 0,
+                            duration: 1.5,
+                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                        });
+                    } else {
+                        // Fallback vers le scroll natif
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            }
+        }
+    }
 };
 </script>

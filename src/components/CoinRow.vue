@@ -17,14 +17,17 @@
   justify-content: space-between;
   text-decoration: none;
   color: white;
+  transition: all 0.3s ease;
 }
 
-.coin-row:hover {
+.coin-row:hover,
+.coin-row:focus {
   background-color: rgba(255, 255, 255, .1);
   border-top: 1px solid white;
   border-bottom: 1px solid white;
   cursor: pointer;
   transition: all 0.2s ease;
+  outline-offset: -2px;
 }
 
 .coinInfos {
@@ -127,23 +130,23 @@
 </style>
 
 <template>
-  <router-link :to="'coin/' + id" class="coin-row">
-    <!-- <router-link :to="{ path: `/coin/${id}` }">Voir les détails</router-link>-->
-    <td class="cell">{{ market_cap_rank }}</td>
-    <td class="coinInfos">
+  <router-link :to="'coin/' + id" class="coin-row" :aria-label="`Voir les détails de ${name}`" role="row" tabindex="0">
+    <td class="cell" role="gridcell">{{ market_cap_rank }}</td>
+    <td class="coinInfos" role="gridcell">
       <div class="coinDivImg"><img class="coinImg" v-bind:src="image" /></div>
       <div class="coinTitle">
         <h2 class="coinName">{{ name }}</h2>
         <h2 class="coinSymbol">{{ symbol }}</h2>
       </div>
     </td>
-    <td class="cell">{{ formattedPrice.formattedCurrentPrice }}€</td>
-    <td class="cell percent"
-      :class="{ 'pos': price_change_percentage_24h >= 0, 'neg': price_change_percentage_24h < 0 }">
-      {{ formattedPrice.formattedPriceChangePercentage24h }}%</td>
-    <td class="cell">{{ formattedPrice.formattedTotalVolume }}€</td>
-    <td class="cell">{{ formattedPrice.formattedMarketCap }}€</td>
-
+    <td class="cell" role="gridcell">{{ formattedPrice.formattedCurrentPrice }}€</td>
+    <td class="cell percent" role="gridcell"
+      :class="{ 'pos': price_change_percentage_24h >= 0, 'neg': price_change_percentage_24h < 0 }"
+      :aria-label="`Variation 24h: ${price_change_percentage_24h >= 0 ? '+' : ''}${formattedPrice.formattedPriceChangePercentage24h}%`">
+      {{ formattedPrice.formattedPriceChangePercentage24h }}%
+    </td>
+    <td class="cell" role="gridcell">{{ formattedPrice.formattedTotalVolume }}€</td>
+    <td class="cell" role="gridcell">{{ formattedPrice.formattedMarketCap }}€</td>
   </router-link>
 </template>
 

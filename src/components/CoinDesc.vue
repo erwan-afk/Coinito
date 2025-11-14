@@ -22,12 +22,6 @@
 
 }
 
-.text {
-    padding: 50px 0px 0px 0px;
-    width: 40%;
-    text-align: justify;
-    text-align-last: center;
-}
 
 @media (max-width: 500px) {
     .text {
@@ -38,7 +32,8 @@
 
 <template>
     <div class="description_coin">
-        <div class="text">{{ text }}</div>
+        {{ text }}
+
 
     </div>
 </template>
@@ -46,6 +41,7 @@
 
 <script>
 import { getSpecificCoinData } from '@/services/api/SpecificCoinRepository.js';
+import { useErrorHandler } from '@/composables/useErrorHandler.js';
 
 export default {
     name: 'CoinDesc',
@@ -62,10 +58,9 @@ export default {
             try {
                 const data = await getSpecificCoinData(this.id);
                 this.CoinDesc = data;
-
-                //console.log(this.CoinDesc);
             } catch (error) {
-                console.error("Error:", error);
+                const { handleApiError } = useErrorHandler();
+                handleApiError(error, 'CoinDesc');
             }
         }
     },

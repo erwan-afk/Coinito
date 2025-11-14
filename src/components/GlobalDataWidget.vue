@@ -153,10 +153,10 @@ export default {
 
         // Stocker les données globales dans le local storage
         localStorage.setItem('GlobalData', JSON.stringify(this.GlobalData));
-
-        //console.log(this.GlobalData);
       } catch (error) {
-        console.error("Error:", error);
+        const { handleApiError, showErrorNotification } = useErrorHandler();
+        const errorInfo = handleApiError(error, 'GlobalDataWidget');
+        showErrorNotification(errorInfo.message);
       }
     },
   },

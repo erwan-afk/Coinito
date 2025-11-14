@@ -1,0 +1,17 @@
+<template>
+  <h3 :class="cn('text-2xl font-semibold leading-none tracking-tight', $attrs.class)">
+    <slot />
+  </h3>
+</template>
+
+<script>
+import { cn } from '@/lib/utils';
+
+export default {
+  name: 'CardTitle',
+  setup() {
+    return { cn };
+  },
+};
+</script>
+
