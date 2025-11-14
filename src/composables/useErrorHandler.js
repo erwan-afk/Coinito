@@ -39,8 +39,6 @@ export function useErrorHandler() {
             }
         } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
             errorMessage = 'Erreur de connexion. Vérifiez votre connexion internet.';
-        } else if (error.message.includes('VITE_COINGECKO_API_KEY')) {
-            errorMessage = error.message;
         } else {
             errorMessage = error.message || errorMessage;
         }
@@ -64,7 +62,7 @@ export function useErrorHandler() {
         // Pour l'instant, on utilise console.error
         // Dans une vraie application, on pourrait utiliser un système de notifications
         console.error('[Error Notification]:', message);
-        
+
         // TODO: Intégrer un système de notifications (toast, snackbar, etc.)
     }
 

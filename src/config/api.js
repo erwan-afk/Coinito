@@ -1,6 +1,6 @@
 /**
  * Configuration de l'API CoinGecko
- * La clé API doit être définie dans le fichier .env avec la variable VITE_COINGECKO_API_KEY
+ * La clé API doit être définie dans le fichier .env avec la variable 
  */
 export const API_CONFIG = {
     baseURL: 'https://api.coingecko.com/api/v3',
@@ -14,7 +14,7 @@ export const API_CONFIG = {
 export function validateApiKey() {
     if (!API_CONFIG.apiKey) {
         throw new Error(
-            'VITE_COINGECKO_API_KEY n\'est pas définie. ' +
+            ' n\'est pas définie. ' +
             'Veuillez créer un fichier .env à la racine du projet avec votre clé API.'
         );
     }
